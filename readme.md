@@ -8,6 +8,9 @@ Comprehensive E2E test automation suite for Comfrt's Shopify store, covering cor
 
 ## Installation
 
+### Requirements 
+A semi-recent version of NodeJS
+
 ```bash
 git clone <repo>
 cd repo
