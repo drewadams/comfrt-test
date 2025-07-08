@@ -1,0 +1,17 @@
+{
+  "name": "comfrt-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.53.2",
+    "@types/node": "^24.0.10",
+    "axe-html-reporter": "^2.2.11"
+  }
+}
