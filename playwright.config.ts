@@ -52,15 +52,17 @@ export default defineConfig({
       testMatch: /.*\/ada\/.*\.spec\.ts/,
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: "firefox",
+      use: { ...devices["Desktop Firefox"] },
+      testIgnore: /.*\/ada\/.*\.spec\.ts/,
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+    {
+      name: "webkit",
+      use: { ...devices["Desktop Safari"] },
+      testIgnore: /.*\/ada\/.*\.spec\.ts/,
+    },
 
     /* Test against mobile viewports. */
     // {
