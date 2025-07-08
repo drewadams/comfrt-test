@@ -4,6 +4,8 @@
 
 Comprehensive E2E test automation suite for Comfrt's Shopify store, covering core purchase flows with error handling and accessibility validation.
 
+**Note:** I limited my time on this to ~6 hours. There is still quite a bit I'd like to have gotten to.
+
 ## Installation
 
 ```bash
