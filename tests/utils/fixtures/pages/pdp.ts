@@ -1,14 +1,15 @@
-import { Page, test as base } from "@playwright/test";
+import PDPPage from "@/test-utils/pages/pdp";
+import { BaseTest as base } from "../base";
 
 interface PDPFixtures {
-  page: Page;
-  PDPPage: any;
+  PDPPage: PDPPage;
 }
 
 export const PDPTest = base.extend<PDPFixtures>({
-  page: async ({ page }, use) => {
-    // Navigate to the PDP URL
-    await page.goto("/products/cloud-zip-hoodie?variant=41732312891436");
-    await use(page);
+  PDPPage: async ({ page }, use) => {
+    // Create an instance of the PDPPage class
+    const pdpPage = new PDPPage(page);
+    await pdpPage.goto();
+    await use(pdpPage);
   },
 });

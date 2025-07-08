@@ -22,30 +22,34 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: "html",
+  reporter: [
+    ["html"],
+    ["json", { outputFile: "playwright-report/results.json" }],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: "on-first-retry",
+    trace: "retain-on-failure",
+    video: "retain-on-failure",
+    screenshot: "only-on-failure",
     baseURL: "https://comfrt.com",
   },
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: "chromium",
-    //   use: { ...devices["Desktop Chrome"] },
-    // },
     {
-      name: "pdp",
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
+      testIgnore: /.*\/ada\/.*\.spec\.ts/,
+    },
+
+    {
+      name: "ada",
       use: {
         ...devices["Desktop Chrome"],
       },
-      timeout: 120 * 1000, // Increase timeout for PDP tests
-      testMatch: /.*\/pdp\.spec\.ts/,
+      timeout: 120 * 1000, // Increase timeout for ADA tests
+      testMatch: /.*\/ada\/.*\.spec\.ts/,
     },
 
     // {

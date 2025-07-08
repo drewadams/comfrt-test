@@ -1,4 +1,5 @@
-import { Page, test as base } from "@playwright/test";
+import { type Page } from "@playwright/test";
+import { BaseTest as base } from "../base";
 
 import { AxeBuilder } from "@axe-core/playwright";
 import { AxeResults as AxeResultsType } from "axe-core";
@@ -22,17 +23,28 @@ interface ADATestFixtures {
     reportPath?: string;
     hasViolations: boolean;
   }>;
+  dateStr: string;
+  deviceType: string;
 }
 
 /**
  * This fixture sets up an AxeBuilder instance for accessibility testing.
  * It can be used in tests to run accessibility checks.
+ *
+ * It provides a `runAxe` function that runs the accessibility checks
+ * and generates an HTML report if there are violations.
  */
 export const ADATest = base.extend<ADATestFixtures>({
   axeBuilder: async ({ page }, use) => {
     await use(new AxeBuilder({ page }));
   },
-  runAxe: async ({ axeBuilder, isMobile }, use) => {
+  dateStr: async ({}, use) => {
+    await use(new Date().toISOString().split("T")[0]); // YYYY-MM-DD format
+  },
+  deviceType: async ({ isMobile }, use) => {
+    await use(isMobile ? "mobile" : "desktop");
+  },
+  runAxe: async ({ axeBuilder, isMobile, dateStr, deviceType }, use) => {
     await use(async (options: AxeOptions) => {
       const { page, options: axeOptions } = options;
 
@@ -52,13 +64,11 @@ export const ADATest = base.extend<ADATestFixtures>({
 
         // Create the report (if there are violations and report generation is enabled)
         if (hasViolations && axeOptions?.createHtmlReport) {
-          const platform = isMobile ? "mobile" : "desktop";
-          const dateStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD format
           const outputDir =
             axeOptions?.outputDir ||
-            `./axe-report/${await page.title()}/${dateStr}/${platform}`;
+            `./axe-report/${await page.title()}/${dateStr}/${deviceType}`;
           const reportFileName =
-            axeOptions?.reportFileName || `pdp-${platform}-report.html`;
+            axeOptions?.reportFileName || `pdp-${deviceType}-report.html`;
           reportPath = `${outputDir}/${reportFileName}`;
 
           createHtmlReport({
@@ -69,7 +79,7 @@ export const ADATest = base.extend<ADATestFixtures>({
               projectKey: "Comfrt",
               customSummary:
                 axeOptions?.customSummary ||
-                `Axe report for ${page.url()} on ${platform} platform`,
+                `Axe report for ${page.url()} on ${deviceType} deviceType`,
             },
           });
 

@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test",
+    "test:report": "npx playwright show-report",
+    "test:pdp": "npx playwright test tests/pdp",
+    "test:checkout": "npx playwright test tests/checkout",
+    "test:accessibility": "npx playwright test tests/ada",
+    "test:bundle": "npx playwright test tests/pdp/bundle.spec.ts",
+    "test:performance": "npx playwright test tests/performance"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
