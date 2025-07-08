@@ -16,6 +16,7 @@ export default class BasePage {
     // Choosing to fully remove the Alia popup
     // instead of just hiding it, to ensure it doesn't interfere with tests.
     // This is a workaround for the Alia popup that appears on the page.
+    // UPDATE: Removing the popup is no longer necessary as it is now hidden by blocking the scripts
     try {
       // Wait a bit for popup to potentially appear
       await this.page.waitForTimeout(1000);

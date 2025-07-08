@@ -172,6 +172,9 @@ export default class PDPPage extends BasePage {
     return variantGroups;
   }
 
+  /**
+   * Selects a variant option by type and input ID.
+   */
   async selectVariant(variantType: string, variantInputId: string) {
     // Clear any popups that might interfere
 
